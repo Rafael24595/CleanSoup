@@ -1,9 +1,7 @@
 package core.java.entities;
 
-import core.java.dependency.DependencyContainer;
 import core.java.entities.character.WordCharacter;
 import core.java.log.Log;
-import core.java.module.log.interfaces.ILog;
 import core.java.module.print.interfaces.IPrint;
 import core.java.module.receiver.dimensions.interfaces.IDimensionsReceiver;
 import core.java.module.receiver.strict.interfaces.IStrictReceiver;

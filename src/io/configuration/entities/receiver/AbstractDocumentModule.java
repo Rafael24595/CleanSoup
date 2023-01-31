@@ -22,9 +22,12 @@ abstract class AbstractDocumentModule extends AbstractDocument {
         return code;
     }
 
-    protected void buildDefaultModule(String tag) {
+    protected void buildModule(Class<? extends IModule> clazz, String tag) throws ConfigurationException {
         buildName(tag);
+        buildDocument(clazz, tag);
     }
+    
+    @SuppressWarnings("unchecked")
     protected <T extends IModule> T buildModule(Class<? extends IModule> clazz, Element element) throws ConfigurationException {
         boolean status = getElementStatus(element);
         T instance = null;
@@ -50,5 +53,6 @@ abstract class AbstractDocumentModule extends AbstractDocument {
     }
 
     protected abstract Element getModuleTagElement(String tag);
+    protected abstract void buildDocument(Class<? extends IModule> clazz, String tag) throws ConfigurationException;
 
 }

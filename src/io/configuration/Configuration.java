@@ -66,14 +66,12 @@ public class Configuration {
 
     private Document read(File filePro) throws ConfigurationException {
         if(filePro != null && filePro.exists()){
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder;
             try {
-                dBuilder = dbFactory.newDocumentBuilder();
-
-                Document doc = dBuilder.parse(filePro);
-                doc.getDocumentElement().normalize();
-                return doc;
+                DocumentBuilder builder = buildDocumentBuilder();
+                Document document = builder.parse(filePro);
+                document.getDocumentElement().normalize();
+                
+                return document;
 
             } catch (ParserConfigurationException e) {
                 throw new ConfigurationException(e);
@@ -84,6 +82,12 @@ public class Configuration {
         }
 
         return read(DEFAULT_PATH_CONFIG);
+    }
+
+    private static DocumentBuilder buildDocumentBuilder() throws ParserConfigurationException{
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        return factory.newDocumentBuilder();
     }
 
     public static IWordReceiver getWordReceiverInstance() throws ConfigurationException {

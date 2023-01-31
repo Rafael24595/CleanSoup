@@ -5,6 +5,7 @@ import static io.configuration.tools.XmlTools.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import io.configuration.entities.receiver.interfaces.IModule;
 import io.configuration.entities.receiver.interfaces.IReceiver;
 import io.configuration.exception.ConfigurationException;
 
@@ -22,12 +23,8 @@ abstract class AbstractDocumentReceiver extends AbstractDocumentModule {
         super(document);
     }
 
-    protected void buildModule(Class<? extends IReceiver> clazz, String tag) throws ConfigurationException {
-        buildDefaultModule(tag);
-        buildReceivers(clazz, tag);
-    }
-
-    private HashMap<String, IReceiver> buildReceivers(Class<? extends IReceiver> clazz, String tag) throws ConfigurationException {
+    @Override
+    protected void buildDocument(Class<? extends IModule> clazz, String tag) throws ConfigurationException {
         this.receivers = new HashMap<>();
         Element receiverTag = getModuleTagElement(tag);
         List<Node> dependencies = getTagsElements(receiverTag, AbstractEntityReceiver.DEPENDENCY);
@@ -37,8 +34,6 @@ abstract class AbstractDocumentReceiver extends AbstractDocumentModule {
             if(instance != null)
                 this.receivers.put(instance.getKey(), instance);
         }
-
-        return this.receivers;
     }
 
     protected <T extends core.java.module.receiver.IReceiver> ArrayList<T> getInstancesList() throws ConfigurationException {

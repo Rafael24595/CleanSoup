@@ -18,15 +18,9 @@ class AbstractDocumentSystem extends AbstractDocumentModule {
         super(document);
     }
 
-    protected void buildModule(Class<? extends IModule> clazz, String tag) throws ConfigurationException {
-        buildDefaultModule(tag);
-        buildSystemModule(clazz, tag);
-    }
-
-    private ISystem buildSystemModule(Class<? extends IModule> clazz, String tag) throws ConfigurationException {
+    protected void buildDocument(Class<? extends IModule> clazz, String tag) throws ConfigurationException {
         Element moduleElementTag = getModuleTagElement(tag);
         this.module = buildModule(clazz, moduleElementTag);
-        return this.module;
     }
 
     protected <T extends core.java.module.IModule> T getInstance() throws ConfigurationException {
